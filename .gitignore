@@ -5,14 +5,16 @@ ehthumbs.db
 Icon?
 Desktop.ini
 
-# Node / JavaScript (必要なければ削ってください)
+# Node / JavaScript
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-lock.yaml
-package-lock.json
+
+# 使わないパッケージマネージャの lock だけ無視したい場合はここで調整
+# 例: npm を使うなら yarn.lock / pnpm-lock.yaml を無視
 yarn.lock
+pnpm-lock.yaml
 
 # Logs
 logs/
