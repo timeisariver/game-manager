@@ -1,0 +1,55 @@
+# OS / 環境依存ファイル
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Node / JavaScript (必要なければ削ってください)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build / Dist
+dist/
+build/
+out/
+coverage/
+.tmp/
+.temp/
+
+# IDE / エディタ
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# 環境変数・ローカル設定
+.env
+.env.*
+*.local
+
+# OSバックアップ系
+*.bak
+*.tmp
+
+# その他よくあるツール
+.cache/
+.next/
+.vercel/
+.sass-cache/
+.storybook-out/
