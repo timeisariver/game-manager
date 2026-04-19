@@ -1,5 +1,71 @@
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+
+async function createGame(newGame) {
+  const response = await fetch("http://localhost:3000/api/games", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newGame),
+  });
+
+  return response.json();
+}
+
 function CreateGame() {
-  return <div>CreateGame</div>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { mutate } = useMutation({ mutationFn: createGame });
+
+  const onSubmit = (formData) => {
+    console.log(formData);
+    mutate({
+      name: formData.name,
+      platform: formData.platform,
+      genre: formData.genre,
+    });
+  };
+
+  return (
+    <div>
+      <h2>Add a New Game</h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form-container bg-card"
+        style={{ padding: "1rem" }}
+      >
+        <label>Game Name</label>
+        <input
+          type="text"
+          placeholder="E.g Super Mario"
+          {...register("name", { required: "Name is required." })}
+        />
+        {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
+        <label>Platform</label>
+        <input
+          type="text"
+          placeholder="E.g Switch, PC"
+          {...register("platform", { required: "Platform is required." })}
+        />
+        {errors.platform && (
+          <p style={{ color: "red" }}>{errors.platform.message}</p>
+        )}
+        <label>Genre</label>
+        <input
+          type="text"
+          placeholder="E.g RPG, Action, Puzzle"
+          {...register("genre", { required: "Genre is required." })}
+        />
+        {errors.genre && <p style={{ color: "red" }}>{errors.genre.message}</p>}
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  );
 }
 
 export default CreateGame;

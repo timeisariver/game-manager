@@ -192,13 +192,15 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columns */
   gap: 1rem;
-  place-items: center;
+  place-items: start center;
+  max-width: 620px;
+  margin: 0 auto;
 }
 
 .game-card {
-  width: 90%;
-  max-width: 320px;
-  background-color: rgba(255, 255, 255, 0.03);
+  height: 100%;
+  width: 100%;
+  background-color: rgba(43, 40, 40, 0.03);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
