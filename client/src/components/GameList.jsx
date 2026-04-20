@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function GameList(props) {
   const games = props.games;
 
@@ -8,6 +10,9 @@ function GameList(props) {
           <h3>{game.name}</h3>
           <p>{game.platform}</p>
           <p>{game.genre}</p>
+          <div>
+            <Link to={`/update/${game.id}`}>Edit</Link>
+          </div>
         </div>
       ))}
     </div>

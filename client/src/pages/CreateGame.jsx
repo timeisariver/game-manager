@@ -19,7 +19,10 @@ function CreateGame() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  reset();
 
   const queryClient = useQueryClient();
 
