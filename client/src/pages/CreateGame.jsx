@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function createGame(newGame) {
   const response = await fetch("http://localhost:3000/api/games", {
@@ -20,7 +21,17 @@ function CreateGame() {
     formState: { errors },
   } = useForm();
 
-  const { mutate } = useMutation({ mutationFn: createGame });
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const { mutate } = useMutation({
+    mutationFn: createGame,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["games"]);
+      navigate("/");
+    },
+  });
 
   const onSubmit = (formData) => {
     console.log(formData);
@@ -33,12 +44,12 @@ function CreateGame() {
 
   return (
     <div>
-      <h2>Add a New Game</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="form-container bg-card"
         style={{ padding: "1rem" }}
       >
+        <h2>Add a New Game</h2>
         <label>Game Name</label>
         <input
           type="text"
