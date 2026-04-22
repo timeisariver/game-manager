@@ -12,9 +12,7 @@ app.get("/api/games", (req, res) => {
 
 app.get("/api/games/:id", (req, res) => {
   const { id } = req.params;
-  const game = games.find((g) => {
-    g.id === Number(id)
-  });
+  const game = games.find((g) => g.id === Number(id));
 
   if (!game) {
     return res.status(404).json({ error: "Game not found." });
