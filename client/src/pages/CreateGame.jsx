@@ -11,6 +11,10 @@ async function createGame(newGame) {
     body: JSON.stringify(newGame),
   });
 
+  if (!response.ok) {
+    throw new Error("Failed to create game");
+  }
+
   return response.json();
 }
 
@@ -22,22 +26,19 @@ function CreateGame() {
     reset,
   } = useForm();
 
-  reset();
-
   const queryClient = useQueryClient();
-
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: createGame,
     onSuccess: () => {
-      queryClient.invalidateQueries(["games"]);
+      queryClient.invalidateQueries({ queryKey: ["games"] });
+      reset();
       navigate("/");
     },
   });
 
   const onSubmit = (formData) => {
-    console.log(formData);
     mutate({
       name: formData.name,
       platform: formData.platform,
@@ -53,6 +54,7 @@ function CreateGame() {
         style={{ padding: "1rem" }}
       >
         <h2>Add a New Game</h2>
+
         <label>Game Name</label>
         <input
           type="text"
@@ -60,6 +62,7 @@ function CreateGame() {
           {...register("name", { required: "Name is required." })}
         />
         {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
+
         <label>Platform</label>
         <input
           type="text"
@@ -69,6 +72,7 @@ function CreateGame() {
         {errors.platform && (
           <p style={{ color: "red" }}>{errors.platform.message}</p>
         )}
+
         <label>Genre</label>
         <input
           type="text"
@@ -76,7 +80,12 @@ function CreateGame() {
           {...register("genre", { required: "Genre is required." })}
         />
         {errors.genre && <p style={{ color: "red" }}>{errors.genre.message}</p>}
-        <button type="submit">Create</button>
+
+        <button type="submit" disabled={isPending}>
+          {isPending ? "Creating..." : "Create"}
+        </button>
+
+        {error && <p style={{ color: "red" }}>{error.message}</p>}
       </form>
     </div>
   );

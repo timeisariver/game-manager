@@ -28,6 +28,26 @@ app.post("/api/games", (req, res) => {
   res.status(201).json(newGame);
 });
 
+app.put("/api/games/:id", (req, res) => {
+  const { id } = req.params;
+  const newUpdatedGame = req.body;
+
+  const index = games.findIndex((g) => g.id === Number(id));
+  if (index === -1) {
+    return res.status(404).json({ error: "Game not found." });
+  }
+
+  games[index] = {
+    ...games[index],
+    name: newUpdatedGame.name,
+    platform: newUpdatedGame.platform,
+    genre: newUpdatedGame.genre
+  };
+
+  res.json(games[index]);
+});
+
+
 app.listen(3000, () => {
   console.log(`Server running on port 3000`);
 });
